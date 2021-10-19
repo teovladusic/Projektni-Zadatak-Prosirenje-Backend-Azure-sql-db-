@@ -6,8 +6,6 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Model;
 using Moq;
-using Project.Model;
-using Project.Model.Common;
 using Repository.Common;
 using Service;
 using System;

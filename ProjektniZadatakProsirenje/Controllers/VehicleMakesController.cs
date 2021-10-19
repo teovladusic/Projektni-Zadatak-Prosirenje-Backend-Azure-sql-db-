@@ -12,6 +12,7 @@ using Model;
 using AutoMapper;
 using Project.Model;
 using Model.VehicleMakes;
+using WebAPI.ViewModels.VehicleMake;
 
 namespace WebAPI.Controllers
 {
@@ -36,6 +37,10 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index([FromQuery] VehicleMakeParams vehicleMakeParams)
         {
+            _logger.LogInformation(vehicleMakeParams.SearchQuery);
+            _logger.LogInformation(vehicleMakeParams.PageNumber.ToString());
+            _logger.LogInformation(vehicleMakeParams.PageSize.ToString());
+            _logger.LogInformation(vehicleMakeParams.OrderBy);
             var pagingParams = CommonFactory.CreatePagingParams(vehicleMakeParams.PageNumber, vehicleMakeParams.PageSize);
             var sortParams = CommonFactory.CreateSortParams(vehicleMakeParams.OrderBy);
             var vehicleMakeFilterParams = CommonFactory.CreateVehicleMakeFilterParams(vehicleMakeParams.SearchQuery);
@@ -44,11 +49,18 @@ namespace WebAPI.Controllers
 
             var makeViewModels = _mapper.Map<List<VehicleMakeViewModel>>(pagedMakes);
 
-            var pagedMakeViewModels = 
-                CommonFactory.CreatePagedList(makeViewModels, pagedMakes.TotalCount,
-                pagedMakes.CurrentPage, pagedMakes.PageSize);
+            var listViewModel = new ListVehicleMakeViewModel
+            {
+                VehicleMakes = makeViewModels,
+                CurrentPage = pagedMakes.CurrentPage,
+                HasNext = pagedMakes.HasNext,
+                HasPrevious = pagedMakes.HasPrevious,
+                PageSize = pagedMakes.PageSize,
+                TotalCount = pagedMakes.TotalCount,
+                TotalPages = pagedMakes.TotalPages
+            };
 
-            return Ok(pagedMakeViewModels);
+            return Ok(listViewModel);
         }
 
         //GET /VehicleMakes/{id}
@@ -128,7 +140,7 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
-            var existingVehicleMakeDomainModel = 
+            var existingVehicleMakeDomainModel =
                 await _vehicleMakesService.GetVehicleMake(vehicleMakeViewModel.Id);
 
             if (existingVehicleMakeDomainModel is null)

@@ -10,7 +10,6 @@ namespace DAL
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-
         }
 
         public DbSet<VehicleMake> VehicleMakes { get; set; }

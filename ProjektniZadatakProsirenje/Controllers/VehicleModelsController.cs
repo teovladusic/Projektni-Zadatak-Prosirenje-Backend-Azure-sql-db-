@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.ViewModels.VehicleMake;
 
 namespace WebAPI.Controllers
 {
@@ -47,7 +48,18 @@ namespace WebAPI.Controllers
             var pagedViewModels = CommonFactory.CreatePagedList(viewModels, pagedDomainModels.TotalCount, pagedDomainModels.CurrentPage,
                 pagedDomainModels.PageSize);
 
-            return Ok(pagedViewModels);
+            var listViewModels = new ListVehicleModelViewModel
+            {
+                VehicleModels = viewModels,
+                CurrentPage = pagedDomainModels.CurrentPage,
+                HasNext = pagedDomainModels.HasNext,
+                HasPrevious = pagedDomainModels.HasPrevious,
+                PageSize = pagedDomainModels.PageSize,
+                TotalCount = pagedDomainModels.TotalCount,
+                TotalPages = pagedDomainModels.TotalPages
+            };
+
+            return Ok(listViewModels);
         }
 
         //GET /VehicleModels/{id}

@@ -15,6 +15,10 @@ namespace Common
 
         public static ISortParams CreateSortParams(string orderBy)
         {
+            if (orderBy == "Order By")
+            {
+                orderBy = null;
+            }
             return new SortParams(orderBy);
         }
 
@@ -25,6 +29,10 @@ namespace Common
 
         public static IVehicleModelFilterParams CreateVehicleModelFilterParams(string searchQuery, string makeName)
         {
+            if (makeName == "Make Name")
+            {
+                makeName = null;
+            }
             return new VehicleModelFilterParams(searchQuery, makeName);
         }
 

@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Common
 {
-    public interface IPagedList<T>
+    public interface IPagedList<T> : IList<T>
     {
         int CurrentPage { get; }
         bool HasNext { get; }

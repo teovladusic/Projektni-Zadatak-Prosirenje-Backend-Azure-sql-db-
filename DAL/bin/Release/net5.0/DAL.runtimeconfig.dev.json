@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\teovl\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\teovl\\.nuget\\packages"
+    ]
+  }
+}

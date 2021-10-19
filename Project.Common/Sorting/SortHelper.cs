@@ -12,7 +12,9 @@ namespace Common
         public IQueryable<T> ApplySort(IQueryable<T> entities, string orderByQueryString)
         {
             if (!entities.Any())
+            {
                 return entities;
+            }
 
             if (string.IsNullOrWhiteSpace(orderByQueryString))
             {
